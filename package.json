@@ -1,0 +1,44 @@
+{
+  "name": "tinypng-mcp-server",
+  "version": "0.0.1",
+  "description": "MCP server for TinyPNG",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "access": "public",
+  "bin": {
+    "tinypng-mcp-server": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm --external xdg-app-paths --external which",
+    "postbuild": "shx chmod +x dist/*.js",
+    "check": "tsc --noEmit",
+    "build:watch": "pnpm build --watch",
+    "test": "vitest run",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "mcp",
+    "tinypng",
+    "image",
+    "compression",
+    "optimization"
+  ],
+  "author": "TinyPNG",
+  "license": "MIT",
+  "packageManager": "pnpm@10.6.5",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "tinify": "^1.8.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  }
+}
