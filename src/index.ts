@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { log } from './helpers.js';
 import { main } from './main.js';
+import { log } from './utils/helpers.js';
 
 // Handle process events
 process.on('unhandledRejection', (error) => {

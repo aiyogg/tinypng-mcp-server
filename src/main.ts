@@ -1,7 +1,8 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
-import { log } from './helpers.js';
+import { TOOLS, TOOL_HANDLERS } from './tools.js';
+import { log } from './utils/helpers.js';
 
 const server = new Server(
   {
@@ -15,12 +16,29 @@ const server = new Server(
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   log('Received list tools request');
-  return { tools: [] };
+  return { tools: TOOLS };
 });
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  log('Received call tool request', request);
-  return { result: 'success' };
+  const toolName = request.params.name;
+  log('Received call tool request, toolName:', toolName);
+
+  try {
+    return await TOOL_HANDLERS[toolName](request);
+  } catch (error) {
+    log('Error handling tool call:', error);
+    return {
+      toolResult: {
+        content: [
+          {
+            type: 'text',
+            text: `Error: ${error instanceof Error ? error.message : String(error)}`,
+          },
+        ],
+        isError: true,
+      },
+    };
+  }
 });
 
 export async function main() {
