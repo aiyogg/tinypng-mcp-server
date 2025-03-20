@@ -1,5 +1,14 @@
 {
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
   "cSpell.words": [
-    "tinypng"
+    "tinypng",
+    "tinify"
   ]
 }
