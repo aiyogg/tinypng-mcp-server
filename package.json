@@ -2,6 +2,8 @@
   "name": "tinypng-mcp-server",
   "version": "0.0.1",
   "description": "MCP server for TinyPNG",
+  "author": "Chuck",
+  "homepage": "https://github.com/aiyogg/tinypng-mcp-server",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -15,7 +17,7 @@
     "tinypng-mcp-server": "dist/index.js"
   },
   "scripts": {
-    "build": "tsup src/index.ts --dts --format esm --external xdg-app-paths --external which",
+    "build": "tsup src/index.ts --dts --format esm",
     "postbuild": "shx chmod +x dist/*.js",
     "check": "tsc --noEmit",
     "build:watch": "pnpm build --watch",
@@ -29,7 +31,6 @@
     "compression",
     "optimization"
   ],
-  "author": "TinyPNG",
   "license": "MIT",
   "packageManager": "pnpm@10.6.5",
   "dependencies": {
@@ -40,6 +41,8 @@
   "devDependencies": {
     "@types/node": "^22.13.10",
     "prettier": "^3.5.3",
+    "shx": "^0.4.0",
+    "tsup": "^8.4.0",
     "typescript": "^5.8.2"
   }
 }
