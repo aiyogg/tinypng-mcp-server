@@ -1,8 +1,8 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
-import { TOOLS, TOOL_HANDLERS } from './tools.js';
-import { log } from './utils/helpers.js';
+import { TOOLS, TOOL_HANDLERS } from './tools';
+import { log } from './utils/helpers';
 
 const server = new Server(
   {

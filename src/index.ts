@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { main } from './main.js';
-import { log } from './utils/helpers.js';
+import { main } from './main';
+import { config, log } from './utils/helpers';
 
 // Handle process events
 process.on('unhandledRejection', (error) => {
@@ -11,5 +11,12 @@ process.on('uncaughtException', (error) => {
   log('Uncaught Exception:', error);
 });
 
-// Start the server
+const [apiKey] = process.argv.slice(2);
+
+if (!apiKey && !process.env.TINYPNG_API_KEY) {
+  throw new Error('Missing API key. Set TINYPNG_API_KEY environment variable or pass it as an argument.');
+}
+
+config.apiKey = apiKey || process.env.TINYPNG_API_KEY;
+
 main();
