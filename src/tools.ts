@@ -41,7 +41,34 @@ const COMPRESS_LOCAL_IMAGE_TOOL: Tool = {
   },
 };
 
-export const TOOLS = [COMPRESS_LOCAL_IMAGE_TOOL];
+const COMPRESS_REMOTE_IMAGE_TOOL: Tool = {
+  name: 'compress_remote_image',
+  description: 'Compress a remote image file by giving the URL of the image',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      imageUrl: {
+        type: 'string',
+        description: 'The URL of the image file to compress',
+        example: 'https://example.com/image.jpg',
+      },
+      outputPath: {
+        type: 'string',
+        description: 'The ABSOLUTE path to save the compressed image file',
+        example: '/Users/user/Downloads/image_compressed.jpg',
+      },
+      outputFormat: {
+        type: 'string',
+        description: 'The format to save the compressed image file',
+        enum: SUPPORTED_IMAGE_TYPES,
+        example: 'image/jpeg',
+      },
+    },
+    required: ['imageUrl'],
+  },
+};
+
+export const TOOLS = [COMPRESS_LOCAL_IMAGE_TOOL, COMPRESS_REMOTE_IMAGE_TOOL];
 
 async function handleCompressLocalImageTool({
   imagePath,
@@ -91,11 +118,69 @@ async function handleCompressLocalImageTool({
   };
 }
 
+async function handleCompressRemoteImageTool({
+  imageUrl,
+  outputPath,
+  outputFormat,
+}: {
+  imageUrl: string;
+  outputPath?: string;
+  outputFormat?: SupportedImageTypes;
+}) {
+  tinify.key = config.apiKey!;
+  const source = tinify.fromUrl(imageUrl);
+  let ext = path.extname(imageUrl).slice(1);
+
+  if (outputFormat) {
+    source.convert({
+      type: outputFormat,
+    });
+    ext = outputFormat.split('/')[1];
+  }
+
+  let dest = outputPath;
+  if (!dest) {
+    const dir = path.dirname(imageUrl);
+    const basename = path.basename(imageUrl, path.extname(imageUrl));
+    dest = path.join(dir, `${basename}.${ext}`);
+  }
+
+  await source.toFile(dest);
+
+  const originalSize = (await fetch(imageUrl).then((res) => res.arrayBuffer())).byteLength;
+  const compressedSize = fs.statSync(dest).size;
+  const compressionRatio = (originalSize - compressedSize) / originalSize;
+
+  return {
+    originalSize,
+    compressedSize,
+    compressionRatio,
+  };
+}
+
 export const TOOL_HANDLERS: ToolHandlers = {
   compress_local_image: async (request) => {
     const result = await handleCompressLocalImageTool(
       request.params.arguments as {
         imagePath: string;
+        outputPath?: string;
+        outputFormat?: SupportedImageTypes;
+      },
+    );
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+      metadata: {},
+    };
+  },
+  compress_remote_image: async (request) => {
+    const result = await handleCompressRemoteImageTool(
+      request.params.arguments as {
+        imageUrl: string;
         outputPath?: string;
         outputFormat?: SupportedImageTypes;
       },
