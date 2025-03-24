@@ -2,8 +2,15 @@
   "name": "tinypng-mcp-server",
   "version": "0.0.1",
   "description": "MCP server for TinyPNG",
-  "author": "Chuck",
-  "homepage": "https://github.com/aiyogg/tinypng-mcp-server",
+  "author": {
+    "name": "Chuck",
+    "email": "403chuck@gmail.com"
+  },
+  "homepage": "https://github.com/aiyogg/tinypng-mcp-server#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aiyogg/tinypng-mcp-server"
+  },
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -14,7 +21,7 @@
   ],
   "access": "public",
   "bin": {
-    "tinypng-mcp-server": "dist/index.js"
+    "tinypng-mcp-server": "./dist/index.js"
   },
   "scripts": {
     "build": "tsup src/index.ts --dts --format esm",
@@ -22,7 +29,8 @@
     "check": "tsc --noEmit",
     "build:watch": "pnpm build --watch",
     "test": "vitest run",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "start": "node dist/index.js"
   },
   "keywords": [
     "mcp",
@@ -31,7 +39,7 @@
     "compression",
     "optimization"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "packageManager": "pnpm@10.6.5",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.7.0",
