@@ -38,3 +38,24 @@ describe('compress_local_image', () => {
     expect(path.extname(path.join(__dirname, 'mocks/images/original_compressed.webp'))).toBe('.webp');
   }, 10000);
 });
+
+describe('resize_image', () => {
+  it('should resize the image', async () => {
+    const request = createMockToolRequest('resize_image', {
+      imagePath: path.join(__dirname, 'mocks/images/original.png'),
+      outputPath: path.join(__dirname, 'mocks/output/original_resized.png'),
+      width: 100,
+      height: 100,
+      method: 'cover',
+    });
+
+    const result = await TOOL_HANDLERS.resize_image(request);
+    verifyToolResponse(result);
+    // @ts-ignore
+    expect(result.content).toHaveLength(1);
+    // @ts-ignore
+    expect(result.content[0].type).toBe('text');
+    // @ts-ignore
+    expect(result.content[0].text).toBe('Image resized successfully');
+  });
+});
