@@ -36,6 +36,14 @@ const COMPRESS_LOCAL_IMAGE_TOOL: Tool = {
         enum: SUPPORTED_IMAGE_TYPES,
         example: 'image/jpeg',
       },
+      preserveMetadata: {
+        type: 'array',
+        description: 'The metadata to preserve in the image file',
+        items: {
+          type: 'string',
+          enum: ['copyright', 'creation', 'location'],
+        },
+      },
     },
     required: ['imagePath'],
   },
@@ -112,14 +120,20 @@ async function handleCompressLocalImageTool({
   imagePath,
   outputPath,
   outputFormat,
+  preserveMetadata,
 }: {
   imagePath: string;
   outputPath?: string;
   outputFormat?: SupportedImageTypes;
+  preserveMetadata?: string[];
 }) {
   const originalSize = fs.statSync(imagePath).size;
   tinify.key = config.apiKey!;
-  const source = tinify.fromFile(imagePath);
+  let source = tinify.fromFile(imagePath);
+
+  if (preserveMetadata?.length) {
+    source = source.preserve(...preserveMetadata);
+  }
 
   let ext = path.extname(imagePath).slice(1);
 
