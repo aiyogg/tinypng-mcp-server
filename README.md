@@ -1,4 +1,5 @@
 ## MCP server for TinyPNG
+[![smithery badge](https://smithery.ai/badge/@aiyogg/tinypng-mcp-server)](https://smithery.ai/server/@aiyogg/tinypng-mcp-server)
 
 ### Usage
 
@@ -25,6 +26,14 @@ pnpm build
     }
   }
 }
+```
+
+### Installing via Smithery
+
+To install TinyPNG MCP Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@aiyogg/tinypng-mcp-server):
+
+```bash
+npx -y @smithery/cli install @aiyogg/tinypng-mcp-server --client claude
 ```
 
 ### Tools
