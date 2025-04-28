@@ -1,5 +1,5 @@
 ## MCP server for TinyPNG
-[![smithery badge](https://smithery.ai/badge/@aiyogg/tinypng-mcp-server)](https://smithery.ai/server/@aiyogg/tinypng-mcp-server)
+[![smithery badge](https://smithery.ai/badge/@aiyogg/tinypng-mcp-server)](https://smithery.ai/server/@aiyogg/tinypng-mcp-server) [![MseeP.ai Security Assessment Badge](https://mseep.net/mseep-audited.png)](https://mseep.ai/app/aiyogg-tinypng-mcp-server)
 
 ### Usage
 
