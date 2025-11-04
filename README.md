@@ -1,6 +1,10 @@
 ## MCP server for TinyPNG
 [![smithery badge](https://smithery.ai/badge/@aiyogg/tinypng-mcp-server)](https://smithery.ai/server/@aiyogg/tinypng-mcp-server) [![MseeP.ai Security Assessment Badge](https://mseep.net/mseep-audited.png)](https://mseep.ai/app/aiyogg-tinypng-mcp-server)
 
+<a href="https://glama.ai/mcp/servers/@aiyogg/tinypng-mcp-server">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@aiyogg/tinypng-mcp-server/badge" alt="tinypng-mcp-server MCP server" />
+</a>
+
 ### Usage
 
 ### Use `bun` or `node` to run the server
